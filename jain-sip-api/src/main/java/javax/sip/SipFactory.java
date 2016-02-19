@@ -104,6 +104,15 @@ import java.util.Properties;
 
 public class SipFactory {
 
+    private final ClassLoader classLoader;
+
+    public synchronized static SipFactory getInstance(ClassLoader classLoader) {
+        if (myFactory == null) {
+            myFactory = new SipFactory(classLoader);
+        }
+        return myFactory;
+    }
+
     /**
      * Returns an instance of a SipFactory. This is a singleton class so this
      * method is the global access point for the SipFactory.
@@ -111,10 +120,7 @@ public class SipFactory {
      * @return the single instance of this singleton SipFactory
      */
     public synchronized static SipFactory getInstance() {
-        if (myFactory == null) {
-            myFactory = new SipFactory();
-        }
-        return myFactory;
+        return getInstance(SipFactory.class.getClassLoader());
     }
 
       /**
@@ -277,8 +283,9 @@ public class SipFactory {
             throw new NullPointerException();
         }
         try {
-            Class peerObjectClass = Class.forName(getPathName() + "."
-                    + objectClassName);
+            Class peerObjectClass = classLoader.loadClass(getPathName() + "." + objectClassName);
+//            Class peerObjectClass = Class.forName(getPathName() + "."
+//                    + objectClassName);
 
             // Creates a new instance of the class represented by this Class
             // object.
@@ -302,11 +309,15 @@ public class SipFactory {
         try {
             // create parameters argument to identify constructor
             Class[] paramTypes = new Class[1];
-            paramTypes[0] = Class.forName("java.util.Properties");
+            paramTypes[0] = classLoader.loadClass("java.util.Properties");
+//            paramTypes[0] = Class.forName("java.util.Properties");
             // get constructor of SipStack in order to instantiate
-            Constructor sipStackConstructor = Class.forName(
+            Constructor sipStackConstructor = classLoader.loadClass(
                     getPathName() + ".javax.sip.SipStackImpl").getConstructor(
                     paramTypes);
+//            Constructor sipStackConstructor = Class.forName(
+//                    getPathName() + ".javax.sip.SipStackImpl").getConstructor(
+//                    paramTypes);
             // Wrap properties object in order to pass to constructor of
             // SipSatck
             Object[] conArgs = new Object[1];
@@ -330,8 +341,10 @@ public class SipFactory {
     /**
      * Constructor for SipFactory class. This is private because applications
      * are not permitted to create an instance of the SipFactory using "new".
+     * @param classLoader
      */
-    private SipFactory() {
+    private SipFactory(ClassLoader classLoader) {
+        this.classLoader = classLoader;
         this.sipStackByName = new Hashtable();
     }
 
