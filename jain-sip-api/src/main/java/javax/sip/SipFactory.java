@@ -283,9 +283,8 @@ public class SipFactory {
             throw new NullPointerException();
         }
         try {
-            Class peerObjectClass = classLoader.loadClass(getPathName() + "." + objectClassName);
-//            Class peerObjectClass = Class.forName(getPathName() + "."
-//                    + objectClassName);
+            Class peerObjectClass = Class.forName(getPathName() + "."
+                    + objectClassName, true, classLoader);
 
             // Creates a new instance of the class represented by this Class
             // object.
@@ -309,15 +308,11 @@ public class SipFactory {
         try {
             // create parameters argument to identify constructor
             Class[] paramTypes = new Class[1];
-            paramTypes[0] = classLoader.loadClass("java.util.Properties");
-//            paramTypes[0] = Class.forName("java.util.Properties");
+            paramTypes[0] = Class.forName("java.util.Properties", true, classLoader);
             // get constructor of SipStack in order to instantiate
-            Constructor sipStackConstructor = classLoader.loadClass(
-                    getPathName() + ".javax.sip.SipStackImpl").getConstructor(
+            Constructor sipStackConstructor = Class.forName(
+                    getPathName() + ".javax.sip.SipStackImpl", true, classLoader).getConstructor(
                     paramTypes);
-//            Constructor sipStackConstructor = Class.forName(
-//                    getPathName() + ".javax.sip.SipStackImpl").getConstructor(
-//                    paramTypes);
             // Wrap properties object in order to pass to constructor of
             // SipSatck
             Object[] conArgs = new Object[1];
