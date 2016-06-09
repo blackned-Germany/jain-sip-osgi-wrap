@@ -14,7 +14,7 @@
 
   <groupId>de.blackned.wrap.osgi.third.sip</groupId>
   <artifactId>jain-sip-parent</artifactId>
-  <version>1.2.264</version>
+  <version>1.3.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>jain-sip-parent</name>
@@ -25,7 +25,7 @@
     <connection>scm:git:git@bned-gitlab.blackned.intern:3rd-Party/jain-sip-osgi-wrap.git</connection>
     <developerConnection>scm:git:git@bned-gitlab.blackned.intern:3rd-Party/jain-sip-osgi-wrap.git</developerConnection>
     <url>scm:git:git@bned-gitlab.blackned.intern:3rd-Party/jain-sip-osgi-wrap.git</url>
-    <tag>v1.2.264</tag>
+    <tag>HEAD</tag>
   </scm>
 
   <ciManagement>
