@@ -14,7 +14,7 @@
 
   <groupId>de.blackned.wrap.osgi.third.sip</groupId>
   <artifactId>jain-sip-parent</artifactId>
-  <version>1.3.0-SNAPSHOT</version>
+  <version>1.4.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>jain-sip-parent</name>
